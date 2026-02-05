@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+
+<!--
+© 2026 WebHubCode
+https://webhubcode.com
+License: MIT
+-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern SaaS Pricing | WebHubCode</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+        }
+        
+        .card-hover {
+            transition: var(--transition);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .popular-badge {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .toggle-bg {
+            transition: var(--transition);
+        }
+        
+        .toggle-dot {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .feature-item {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .feature-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .price-change {
+            animation: pricePulse 0.6s ease-out;
+        }
+        
+        @keyframes pricePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .section-fade-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-cloud text-white"></i>
+                </div>
+                <span class="text-xl font-bold text-gray-800">NexaCloud</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="text-gray-600 hover:text-indigo-600 font-medium">Features</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600 font-medium">Solutions</a>
+                <a href="#" class="text-indigo-600 font-medium border-b-2 border-indigo-600 pb-1">Pricing</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600 font-medium">Resources</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="text-gray-600 hover:text-indigo-600 font-medium">Sign In</a>
+                <button class="bg-indigo-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-indigo-700 transition-colors">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Pricing Header -->
+    <section class="py-16 px-6">
+        <div class="container mx-auto max-w-4xl text-center section-fade-in">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Simple, transparent pricing</h1>
+            <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">Choose the perfect plan for your needs. Scale up as your business grows. No hidden fees.</p>
+            
+            <!-- Billing Toggle -->
+            <div class="flex justify-center items-center mb-16">
+                <span class="text-gray-700 font-medium mr-4">Monthly billing</span>
+                <div class="relative">
+                    <input type="checkbox" id="billing-toggle" class="sr-only" checked>
+                    <div class="block bg-gray-300 w-14 h-8 rounded-full toggle-bg"></div>
+                    <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full toggle-dot"></div>
+                </div>
+                <span class="text-gray-700 font-medium ml-4">Annual billing</span>
+                <span class="ml-3 bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">
+                    <span id="discount-percent">20%</span> discount
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section class="py-8 px-6 pb-20">
+        <div class="container mx-auto max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Starter Plan -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-200 card-hover">
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Starter</h3>
+                        <p class="text-gray-600 mb-6">Perfect for individuals and small teams getting started</p>
+                        
+                        <div class="flex items-baseline mb-2">
+                            <span class="text-5xl font-bold text-gray-900" id="starter-price">$19</span>
+                            <span class="text-gray-600 ml-2" id="starter-period">/month</span>
+                        </div>
+                        <p class="text-gray-500 text-sm" id="starter-billing-text">Billed monthly</p>
+                    </div>
+                    
+                    <button class="w-full bg-gray-100 text-gray-800 font-medium py-3 rounded-lg mb-8 hover:bg-gray-200 transition-colors">
+                        Get Started
+                    </button>
+                    
+                    <div class="space-y-4">
+                        <h4 class="font-medium text-gray-900">Everything in Starter:</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>Up to 5 team members</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>10GB cloud storage</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>Basic analytics dashboard</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>Email support</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>10 project templates</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Professional Plan (Popular) -->
+                <div class="bg-gradient-to-br from-indigo-50 to-white rounded-2xl shadow-xl p-8 border border-indigo-100 relative card-hover transform scale-105">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow popular-badge">
+                            MOST POPULAR
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Professional</h3>
+                        <p class="text-gray-600 mb-6">Best for growing teams and small businesses</p>
+                        
+                        <div class="flex items-baseline mb-2">
+                            <span class="text-5xl font-bold text-gray-900" id="pro-price">$49</span>
+                            <span class="text-gray-600 ml-2" id="pro-period">/month</span>
+                        </div>
+                        <p class="text-gray-500 text-sm" id="pro-billing-text">Billed monthly</p>
+                    </div>
+                    
+                    <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium py-3 rounded-lg mb-8 hover:from-indigo-700 hover:to-purple-700 transition-all shadow-md">
+                        Try Free for 14 Days
+                    </button>
+                    
+                    <div class="space-y-4">
+                        <h4 class="font-medium text-gray-900">Everything in Professional:</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>Up to 20 team members</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>100GB cloud storage</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>Advanced analytics & reporting</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>Priority email & chat support</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>Custom project templates</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>API access</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>Advanced security features</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Enterprise Plan -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-200 card-hover">
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
+                        <p class="text-gray-600 mb-6">For large organizations with custom needs</p>
+                        
+                        <div class="flex items-baseline mb-2">
+                            <span class="text-5xl font-bold text-gray-900" id="enterprise-price">$99</span>
+                            <span class="text-gray-600 ml-2" id="enterprise-period">/month</span>
+                        </div>
+                        <p class="text-gray-500 text-sm" id="enterprise-billing-text">Billed monthly</p>
+                    </div>
+                    
+                    <button class="w-full bg-gray-100 text-gray-800 font-medium py-3 rounded-lg mb-8 hover:bg-gray-200 transition-colors">
+                        Contact Sales
+                    </button>
+                    
+                    <div class="space-y-4">
+                        <h4 class="font-medium text-gray-900">Everything in Enterprise:</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>Unlimited team members</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>1TB+ cloud storage</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>Custom analytics & insights</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>24/7 phone & dedicated support</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>Custom integrations</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>Enterprise-grade security & compliance</span>
+                            </li>
+                            <li class="flex items-start feature-item">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span>Custom SLAs & onboarding</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 px-6 bg-gray-50">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Frequently Asked Questions</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h4 class="font-bold text-lg text-gray-900 mb-3">Can I change plans anytime?</h4>
+                    <p class="text-gray-600">Yes, you can upgrade or downgrade your plan at any time. Changes will be prorated and reflected in your next billing cycle.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h4 class="font-bold text-lg text-gray-900 mb-3">Is there a free trial available?</h4>
+                    <p class="text-gray-600">Yes, the Professional plan includes a 14-day free trial. No credit card required to start the trial.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h4 class="font-bold text-lg text-gray-900 mb-3">Do you offer discounts for nonprofits?</h4>
+                    <p class="text-gray-600">We offer a 50% discount for registered nonprofit organizations. Contact our sales team with your proof of nonprofit status.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h4 class="font-bold text-lg text-gray-900 mb-3">What payment methods do you accept?</h4>
+                    <p class="text-gray-600">We accept all major credit cards, PayPal, and bank transfers for annual contracts. All payments are securely processed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 px-6">
+        <div class="container mx-auto max-w-4xl text-center">
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-10 text-white shadow-xl">
+                <h2 class="text-3xl font-bold mb-4">Ready to transform your business?</h2>
+                <p class="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">Join over 10,000 companies that trust NexaCloud with their data and workflows.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button class="bg-white text-indigo-600 font-bold px-8 py-4 rounded-lg hover:bg-gray-100 transition-colors">
+                        Start Free 14-Day Trial
+                    </button>
+                    <button class="bg-transparent border-2 border-white text-white font-bold px-8 py-4 rounded-lg hover:bg-white/10 transition-colors">
+                        Schedule a Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12 px-6">
+        <div class="container mx-auto max-w-7xl">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-cloud text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">NexaCloud</span>
+                    </div>
+                    <p class="text-gray-400">Powering the future of cloud collaboration.</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 NexaCloud Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize animations and interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pricing toggle functionality
+            const billingToggle = document.getElementById('billing-toggle');
+            const toggleBg = document.querySelector('.toggle-bg');
+            const toggleDot = document.querySelector('.toggle-dot');
+            const discountPercent = document.getElementById('discount-percent');
+            
+            // Pricing elements
+            const starterPrice = document.getElementById('starter-price');
+            const starterPeriod = document.getElementById('starter-period');
+            const starterBillingText = document.getElementById('starter-billing-text');
+            
+            const proPrice = document.getElementById('pro-price');
+            const proPeriod = document.getElementById('pro-period');
+            const proBillingText = document.getElementById('pro-billing-text');
+            
+            const enterprisePrice = document.getElementById('enterprise-price');
+            const enterprisePeriod = document.getElementById('enterprise-period');
+            const enterpriseBillingText = document.getElementById('enterprise-billing-text');
+            
+            // Monthly and annual prices
+            const prices = {
+                starter: { monthly: 19, annual: 15 },
+                pro: { monthly: 49, annual: 39 },
+                enterprise: { monthly: 99, annual: 79 }
+            };
+            
+            // Toggle billing period
+            billingToggle.addEventListener('change', function() {
+                const isAnnual = billingToggle.checked;
+                
+                // Animate toggle
+                if (isAnnual) {
+                    toggleBg.classList.remove('bg-gray-300');
+                    toggleBg.classList.add('bg-indigo-600');
+                    toggleDot.style.transform = 'translateX(26px)';
+                    
+                    // Update prices with animation
+                    updatePrice(starterPrice, prices.starter.annual);
+                    updatePrice(proPrice, prices.pro.annual);
+                    updatePrice(enterprisePrice, prices.enterprise.annual);
+                    
+                    // Update billing text
+                    starterPeriod.textContent = '/month';
+                    proPeriod.textContent = '/month';
+                    enterprisePeriod.textContent = '/month';
+                    
+                    starterBillingText.textContent = 'Billed annually ($180/year)';
+                    proBillingText.textContent = 'Billed annually ($468/year)';
+                    enterpriseBillingText.textContent = 'Billed annually ($948/year)';
+                    
+                    // Update discount percentage
+                    discountPercent.textContent = '20%';
+                } else {
+                    toggleBg.classList.remove('bg-indigo-600');
+                    toggleBg.classList.add('bg-gray-300');
+                    toggleDot.style.transform = 'translateX(0)';
+                    
+                    // Update prices with animation
+                    updatePrice(starterPrice, prices.starter.monthly);
+                    updatePrice(proPrice, prices.pro.monthly);
+                    updatePrice(enterprisePrice, prices.enterprise.monthly);
+                    
+                    // Update billing text
+                    starterPeriod.textContent = '/month';
+                    proPeriod.textContent = '/month';
+                    enterprisePeriod.textContent = '/month';
+                    
+                    starterBillingText.textContent = 'Billed monthly';
+                    proBillingText.textContent = 'Billed monthly';
+                    enterpriseBillingText.textContent = 'Billed monthly';
+                    
+                    // Update discount percentage
+                    discountPercent.textContent = '20%';
+                }
+            });
+            
+            // Function to animate price changes
+            function updatePrice(element, newPrice) {
+                element.classList.add('price-change');
+                setTimeout(() => {
+                    element.textContent = '$' + newPrice;
+                    setTimeout(() => {
+                        element.classList.remove('price-change');
+                    }, 600);
+                }, 200);
+            }
+            
+            // Animate feature items on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all feature items
+            document.querySelectorAll('.feature-item').forEach(item => {
+                observer.observe(item);
+            });
+            
+            // Add delay to feature items for staggered animation
+            document.querySelectorAll('.feature-item').forEach((item, index) => {
+                item.style.transitionDelay = `${index * 0.1}s`;
+            });
+            
+            // Button hover effects
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.1)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '';
+                });
+            });
+            
+            // Plan selection simulation
+            const planCards = document.querySelectorAll('.bg-white.rounded-2xl, .bg-gradient-to-br');
+            planCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove selection from all cards
+                    planCards.forEach(c => {
+                        c.classList.remove('ring-2', 'ring-indigo-500');
+                    });
+                    
+                    // Add selection to clicked card
+                    this.classList.add('ring-2', 'ring-indigo-500');
+                    
+                    // Get plan name
+                    const planName = this.querySelector('h3').textContent;
+                    
+                    // Show selection message
+                    const message = document.createElement('div');
+                    message.className = 'fixed bottom-4 right-4 bg-indigo-600 text-white px-4 py-3 rounded-lg shadow-lg z-50';
+                    message.innerHTML = `<span class="font-medium">Selected:</span> ${planName} plan`;
+                    document.body.appendChild(message);
+                    
+                    // Remove message after 3 seconds
+                    setTimeout(() => {
+                        message.remove();
+                    }, 3000);
+                });
+            });
+            
+            // Initialize with annual billing selected
+            billingToggle.checked = true;
+            billingToggle.dispatchEvent(new Event('change'));
+        });
+    </script>
+</body>
+</html>
